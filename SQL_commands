@@ -1,0 +1,47 @@
+create database library;
+use library;
+CREATE TABLE `books` (
+`bid` int NOT NULL AUTO_INCREMENT,
+`book_name` varchar(50) NOT NULL,
+`book_publisher` varchar(50) NOT NULL,
+`book_edition` varchar(50) NOT NULL,
+PRIMARY KEY (`bid`)
+);
+
+
+use library;
+CREATE TABLE `users` (
+`UID` int NOT NULL AUTO_INCREMENT,
+`USERNAME` varchar(30) NOT NULL,
+`PASSWORD` varchar(30) NOT NULL,
+`USER_TYPE` int NOT NULL,
+PRIMARY KEY (`UID`)
+);
+
+
+use library;
+CREATE TABLE `issued_books` (
+`IID` int NOT NULL AUTO_INCREMENT,
+`UID` int NOT NULL,
+`BID` int NOT NULL,
+`ISSUED_DATE` varchar(20) NOT NULL,
+PRIMARY KEY (`IID`),
+KEY `UID` (`UID`),
+KEY `BID` (`BID`),
+ FOREIGN KEY (`BID`) REFERENCES `books` (`bid`),
+ FOREIGN KEY (`UID`) REFERENCES `users` (`UID`)
+);
+
+
+use library;
+CREATE TABLE `returned_books` (
+`rid` int NOT NULL AUTO_INCREMENT,
+`bid` int NOT NULL,
+`uid` int NOT NULL,
+`return_date` varchar(50) NOT NULL,
+PRIMARY KEY (`rid`),
+KEY `uid` (`uid`),
+KEY `bid` (`bid`),
+ FOREIGN KEY (`bid`) REFERENCES `books` (`bid`),
+ FOREIGN KEY (`uid`) REFERENCES `users` (`UID`)
+);
